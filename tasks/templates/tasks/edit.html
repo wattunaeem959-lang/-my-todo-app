@@ -1,0 +1,15 @@
+<style>
+body{font-family:sans-serif;background:#f0f2f5;display:flex;justify-content:center;padding-top:80px}
+.card{background:white;width:400px;padding:25px;border-radius:15px;box-shadow:0 10px 25px rgba(0,0,0,0.1)}
+input{width:100%;padding:10px;margin:10px 0;border-radius:8px;border:1px solid #ddd;box-sizing:border-box}
+button{padding:10px 15px;border:none;background:#6c5ce7;color:white;border-radius:8px;cursor:pointer}
+a{color:#6c5ce7;text-decoration:none;margin-left:10px}
+</style>
+<div class="card">
+<h2>Edit Task</h2>
+<form method="POST">{% csrf_token %}
+<input type="text" name="title" value="{{ task.title }}" required>
+<button>Save</button>
+<a href="/">Cancel</a>
+</form>
+</div>

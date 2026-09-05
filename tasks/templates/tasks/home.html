@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><title>To-Do</title>
+<style>
+body { font-family: sans-serif; background: #f0f2f5; display:flex; justify-content:center; padding-top:30px; }
+.card { background: white; width: 420px; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+h1 { text-align:center; color:#333; margin-bottom:5px; }
+.top { display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; font-size:14px; }
+form { display:flex; gap:10px; margin: 20px 0; }
+input { flex:1; padding:10px; border-radius:8px; border:1px solid #ddd; }
+button { padding:10px 15px; border:none; background:#6c5ce7; color:white; border-radius:8px; cursor:pointer; }
+.task { display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid #eee; }
+.task.completed span { text-decoration: line-through; color: gray; }
+.actions a { margin-left:8px; text-decoration:none; font-size:14px; }
+</style>
+</head>
+<body>
+<div class="card">
+    <div class="top">
+        <span>Hi, <b>{{ request.user.username }}</b> 👋</span>
+        <a href="/logout/" style="color:#ff7675; text-decoration:none;">Logout</a>
+    </div>
+    <h1>✨ My To-Do</h1>
+    <form method="POST">{% csrf_token %}
+        <input type="text" name="title" placeholder="Naya task likh..." required>
+        <button type="submit">Add</button>
+    </form>
+    {% for task in tasks %}
+        <div class="task {% if task.completed %}completed{% endif %}">
+            <div>
+                <a href="/toggle/{{ task.id }}/" style="text-decoration:none;">{% if task.completed %}✅{% else %}⭕{% endif %}</a>
+                <span style="margin-left:8px;">{{ task.title }}</span>
+            </div>
+            <div class="actions">
+                <a href="/edit/{{ task.id }}/" style="color:#6c5ce7;">Edit</a>
+                <a href="/delete/{{ task.id }}/" style="color:#ff7675;">X</a>
+            </div>
+        </div>
+    {% empty %}
+        <p style="text-align:center; color:#999;">Koi task nahi hai... chill hai 😎</p>
+    {% endfor %}
+</div>
+</body>
+</html>
